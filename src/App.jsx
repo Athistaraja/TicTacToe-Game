@@ -40,8 +40,19 @@ const TicTacToe = () => {
   };
 
   return (
-    <div className="container d-flex flex-column align-items-center justify-content-center vh-100 bg-gradient text-white" style={{ background: 'linear-gradient(135deg, #1e1e2f, #3a3a5e)' }}>
-      <h1 className="mb-4 text-info fw-bold shadow-lg">Tic Tac Toe</h1>
+    <div className="container d-flex flex-column align-items-center justify-content-center vh-100 bg-gradient text-white" style={{ background: ' #1e1e2f' }}>
+      <h1 className="mb-4 text-white fw-bold">Tic Tac Toe</h1>
+      <div className="d-flex justify-content-around w-50 my-3 p-3 bg-dark rounded shadow-lg">
+        <div className="text-warning">
+          <h3>X: {score.X}</h3>
+        </div>
+        <div className="text-primary">
+          <h3>O: {score.O}</h3>
+        </div>
+        <div className="text-secondary">
+          <h3>Draw: {score.Draw}</h3>
+        </div>
+      </div>
       <div 
         className="position-relative d-grid gap-3 p-3 rounded border border-info" 
         style={{ gridTemplateColumns: 'repeat(3, 1fr)', width: '320px', height: '320px', boxShadow: '0 0 15px rgba(0, 255, 255, 0.5)' }}
@@ -75,17 +86,7 @@ const TicTacToe = () => {
       <div className="my-4 fs-4 bg-info p-3 rounded shadow-lg text-dark" style={{ animation: 'fadeIn 0.5s' }}>
         {status}
       </div>
-      <div className="d-flex justify-content-around w-50 my-3 p-3 bg-dark rounded shadow-lg">
-        <div className="text-warning">
-          <h3>X: {score.X}</h3>
-        </div>
-        <div className="text-primary">
-          <h3>O: {score.O}</h3>
-        </div>
-        <div className="text-secondary">
-          <h3>Draw: {score.Draw}</h3>
-        </div>
-      </div>
+      
       <button
         className="btn btn-outline-warning btn-lg shadow mt-3"
         onClick={resetGame}
@@ -121,10 +122,10 @@ function getStrikeStyle(line) {
   if (!line) return {};
 
   const strikeStyles = {
-    horizontal: { top: `${line[0] / 3 * 100 + 50}px`, left: '0', width: '100%', height: '6px', animation: 'strike 0.5s ease-in-out' },
-    vertical: { top: '0', left: `${(line[0] % 3) * 100 + 50}px`, width: '6px', height: '100%', animation: 'strike 0.5s ease-in-out' },
-    diagonal1: { top: '0', left: '0', width: '141%', height: '6px', transform: 'rotate(45deg)', transformOrigin: 'top left', animation: 'strike 0.5s ease-in-out' },
-    diagonal2: { top: '0', right: '0', width: '141%', height: '6px', transform: 'rotate(-45deg)', transformOrigin: 'top right', animation: 'strike 0.5s ease-in-out' },
+    horizontal: { top: `${line[0] / 3 * 100 + 55}px`, left: '15px', width: '90%', height: '6px', animation: 'strike 3s ease-in-out' },
+    vertical: { top: '15px', left: `${(line[0] % 3) * 100 + 55}px`, width: '6px', height: '90%', animation: 'strike 3s ease-in-out' },
+    diagonal1: { top: '10px', left: '13px', width: '130%', height: '6px', transform: 'rotate(45deg)', transformOrigin: 'top left', animation: 'strike 2s ease-in-out' },
+    diagonal2: { top: '10px', right: '13px', width: '130%', height: '6px', transform: 'rotate(-45deg)', transformOrigin: 'top right', animation: 'strike 2s ease-in-out' },
   };
 
   if (line.join() === "0,1,2" || line.join() === "3,4,5" || line.join() === "6,7,8") return strikeStyles.horizontal;
