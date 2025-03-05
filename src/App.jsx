@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const TicTacToe = () => {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [isXNext, setIsXNext] = useState(true);
   const [score, setScore] = useState({ X: 0, O: 0, Draw: 0 });
+  const [isSinglePlayer, setIsSinglePlayer] = useState(true);
 
   const winningLine = calculateWinner(board);
   const winner = winningLine ? board[winningLine[0]] : null;
@@ -13,7 +14,16 @@ const TicTacToe = () => {
     ? `🎉 Winner: ${winner}`
     : isDraw
     ? "Match Draw! 🤝"
-    : `Next player: ${isXNext ? "X" : "O"}`;
+    : `Next player: ${isXNext ? "X" : isSinglePlayer ? "O (Auto)" : "O"}`;
+
+  useEffect(() => {
+    if (isSinglePlayer && !isXNext && !winner && !isDraw) {
+      const bestMove = getBestMove(board);
+      if (bestMove !== null) {
+        setTimeout(() => handleClick(bestMove), 500);
+      }
+    }
+  }, [isXNext, board, winner, isDraw, isSinglePlayer]);
 
   const handleClick = (index) => {
     if (board[index] || winner || isDraw) return;
@@ -38,10 +48,22 @@ const TicTacToe = () => {
     setBoard(Array(9).fill(null));
     setIsXNext(true);
   };
+  const getBestMove = (board) => {
+    const availableMoves = board.map((cell, index) => (cell === null ? index : null)).filter((val) => val !== null);
+    return availableMoves.length > 0 ? availableMoves[Math.floor(Math.random() * availableMoves.length)] : null;
+  };
 
   return (
     <div className="container d-flex flex-column align-items-center justify-content-center vh-100 bg-gradient text-white" style={{ background: ' #1e1e2f' }}>
       <h1 className="mb-4 text-white fw-bold">Tic Tac Toe</h1>
+      <select 
+        className="form-select w-50 mb-3" 
+        value={isSinglePlayer ? "single" : "multi"} 
+        onChange={(e) => setIsSinglePlayer(e.target.value === "single")}
+      >
+        <option value="single">Single Player</option>
+        <option value="multi">Multiplayer</option>
+      </select>
       <div className="d-flex justify-content-around w-50 my-3 p-3 bg-dark rounded shadow-lg flex-wrap">
         <div className="text-warning">
           <h3>X: {score.X}</h3>
