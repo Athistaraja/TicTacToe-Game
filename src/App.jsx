@@ -42,7 +42,7 @@ const TicTacToe = () => {
   return (
     <div className="container d-flex flex-column align-items-center justify-content-center vh-100 bg-gradient text-white" style={{ background: ' #1e1e2f' }}>
       <h1 className="mb-4 text-white fw-bold">Tic Tac Toe</h1>
-      <div className="d-flex justify-content-around w-50 my-3 p-3 bg-dark rounded shadow-lg">
+      <div className="d-flex justify-content-around w-50 my-3 p-3 bg-dark rounded shadow-lg flex-wrap">
         <div className="text-warning">
           <h3>X: {score.X}</h3>
         </div>
